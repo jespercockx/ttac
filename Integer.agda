@@ -6,6 +6,10 @@ module Integer where
     +_     : Nat → Int
     -[1+_] : Nat → Int
 
+  -_ : Nat → Int
+  - zero  = + zero
+  - suc x = -[1+ x ]
+
   pattern +5 = + 5
   pattern +4 = + 4
   pattern +3 = + 3

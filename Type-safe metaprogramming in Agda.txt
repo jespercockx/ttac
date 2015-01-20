@@ -1,0 +1,134 @@
+
+
+
+
+
+
+
+                =====================================
+                | Type-safe metaprogramming in Agda |
+                |                                   |
+                |                      Jesper Cockx |
+                |                        19-01-2015 |
+                =====================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Overview
+--------
+
+1. Untyped syntax
+
+2. Typed syntax
+
+3. Applications: typed tactics
+
+
+
+
+
+
+
+
+
+1. Untyped syntax
+-----------------
+
+* No separate syntax for application
+  - Terms are always in beta-normal form
+  - Need to implement substitution
+
+* First-class substitutions
+  - Better equational reasoning in Agda
+  - Embedded in syntax or not? How?
+  - Either way, it `just works'
+
+* View types
+  - Defining functions that only work on a certain term constructor
+  - Currently used for pi and set
+
+* Decidable equality
+  - Often needed in Agda code
+  - But tedious and error-prone to define yourself
+  - Solution: deriveEqDef from Ulf's prelude
+
+
+
+
+
+
+
+
+2. Typed syntax
+---------------
+
+* Contexts and types in indices are untyped
+  - Agda's unification algorithm works better on simply-typed data
+  - Interpretation: if context and type are well-typed, then so is the term
+  - Use typechecker (see later) if you need typed representation
+
+* Toughest problem: how to define equality?
+  - A few choices (strict --> loose)
+    + Only allow fully normalized types in context
+    + Normalize terms before comparing syntactic equality
+    + Use a custom equality judgement with beta rules
+  - Too strict and typing rules get in the way of constructing terms
+  - Too loose and analysing typed terms becomes impossible
+    => problem for composability and correctness proofs
+
+* A typechecker for reflected syntax
+  - A simple bidirectional typechecker based on the FSA project
+  - Returns (maybe) a typed term + proof that erasure equals the original term
+
+
+
+
+
+
+
+
+3. Application: typed tactics
+-----------------------------
+
+* How do tactics work in Agda?
+  - A tactic, given a context and a type, produces a term of that type
+  - `tactic tac x' desugars to `quoteGoal g in (unquote (tac quoteContext g x))'
+  - Type of x can depend on context & goal type!
+    e.g. ttac accepts only terms of the correct type
+  - Argument `x' of tactic can be developed interactively
+
+* Unquoting vs. interpreting
+  - Most metaprogramming (e.g. Dominique's) define an interpretation function
+  - Advantage of interpreting:
+    + metaprograms are provably sound
+    + can be done at `run time'
+    + no language support needed for unquoting
+  - Advantages of unquoting:
+    + much easier to implement
+    + flexibility to use (potentially) unsound features (e.g. set-in-set)
+    + everything is re-typechecked by Agda
+
+* Examples implemented so far:
+  - Assumption: syntactic search for suitable context variable
+  - Search: syntactic search in (reflected) list for element
+    + how to show to Agda that cons takes exactly 2 arguments?
+
+* Future examples:
+  - Tautology / congruence / auto
+  - Rewrite: what to do with dependencies?
+  - Tactic combinators: compose, repeat, hint, ...
+  - Datatype generics: induction, inversion, decide equality, ...
+
+
+
