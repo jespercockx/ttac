@@ -1,4 +1,5 @@
 {-# OPTIONS --no-positivity-check #-}
+{-# OPTIONS -v tc.lhs.unify:100 #-}
 
 open import Prelude
 open import Data.List using (Any; forgetAny) renaming (_∈_ to _l∈_)
@@ -6,7 +7,7 @@ open import Builtin.Reflection as Builtin using
   ( Arg; arg; unArg; ArgInfo; arg-info; vArg; hArg
   ; Abs; abs
   ; el; unEl
-  ; Visibility; visible; hidden; instance′
+  ; Visibility; visible; hidden; instance′; visibility
   ; Relevance; relevant
   ; Name
   )
@@ -81,7 +82,7 @@ module Typed where
   erase (var i xs) = var (erase∈ i) (eraseArgs xs)
   erase (con c xs) = con c (eraseArgs xs)
   erase (def f xs) = def f (eraseArgs xs)
-  erase (lam _ {arg-info v _} t)  = lam v (erase t)
+  erase (lam _ {i} t)  = lam (visibility i) (erase t)
   erase (pi a b)   = pi (fmap erase a) (erase b)
   erase set        = set
   erase unknown    = unknown

@@ -162,9 +162,11 @@ NormalizeTerm = record { normalize = normalizeTerm }
 Normal : ∀ {T} {{_ : Normalize T}} → T → Set
 Normal t = normalize t ≡ t
 
+{-
 module test where
 
-  test : normalize (def (quote _+_) (vArg (parse (quoteTerm 1)) ∷ vArg (parse (quoteTerm 1)) ∷ []))
+  test : normalize (def (quote _+_) (vArg (parse (quoteTerm (1 ofType Nat))) ∷ vArg (parse (quoteTerm 1)) ∷ []))
           ≡ parse (quoteTerm 2)
   test = refl
 
+-}

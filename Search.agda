@@ -38,8 +38,8 @@ mysearch : ∀ {Γ} → (x : Term Γ (def (quote Nat) [])) (xs : Term Γ (def (q
            Maybe (Term Γ (def (quote MyEl) (vArg (erase x) ∷ vArg (erase xs) ∷ [])))
 mysearch x (con c xs) with c == quote cons
 mysearch x (con .(quote cons) ([] {{eq}})) | yes refl = ⊥-elim (piNotList _ eq)
-mysearch x (con .(quote cons) (_∷_ {b = ._} {{cong-pi eq₁ (cong-pi x₁ eq₂)}} t [])) | yes refl = ?
-mysearch x (con .(quote cons) (_∷_ {b = ._} {{cong-pi eq₁ (beta₁ eq₂)}} t [])) | yes refl = ?
+mysearch x (con .(quote cons) (_∷_ {b = ._} {{cong-pi eq₁ (cong-pi x₁ eq₂)}} t [])) | yes refl = {!!}
+mysearch x (con .(quote cons) (_∷_ {b = ._} {{cong-pi eq₁ (beta₁ eq₂)}} t [])) | yes refl = {!!}
 mysearch x (con .(quote cons) (_∷_ {b = b} {{cong-pi eq₁ eq₂}} x' (xs ∷ []))) | yes refl = {!x₁!} {-with x == x'
 mysearch x (con ._ (.x ∷ (xs ∷ [] {{refl}}))) | yes refl | yes refl =
   just (con (quote here) (x ∷ xs ∷ []))

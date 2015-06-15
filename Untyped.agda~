@@ -1,7 +1,7 @@
 {-# OPTIONS -v tc.unquote.def:30 #-}
 module Untyped where
 
-open import Prelude hiding (id; [_]; _$_)
+open import Prelude hiding (id; [_]; _$_; _!_)
 open import Builtin.Reflection as Builtin using
   ( Arg; arg; unArg; ArgInfo; arg-info; vArg; hArg
   ; Abs; abs

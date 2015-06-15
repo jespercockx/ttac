@@ -1,0 +1,14 @@
+assumption => look at context and goal, syntactic equality check
+rewrite => find all occurrences of a subterm, abstract over them
+congruence
+induction
+tauto
+inversion
+decide equality => datatype reflection
+;
+match goal with + context + existential variables with explicit scope + higher-order matching
+hints => instance arguments
+repeat => nontermination monad
+apply eliminator => deduce motive
+
+
